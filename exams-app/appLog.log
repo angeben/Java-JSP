@@ -1,0 +1,31 @@
+2024-03-11 02:53:16,193 [WARN] com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3h1m56s612ms60탎600ns).
+2024-03-11 20:31:01,205 [WARN] com.zaxxer.hikari.pool.HikariPool [HikariPool-1 housekeeper] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17h37m58s485ms700탎100ns).
+2024-12-26 14:09:49,463 [INFO] org.studyeasy.SpringRestdemo.SpringRestdemoApplication [main] Starting SpringRestdemoApplication using Java 17.0.12 with PID 7888 (D:\햚gel\Code\_Git Repositories\Java-Spring\album-app\target\classes started by 햚gel in D:\햚gel\Code\_Git Repositories\Java-Spring\album-app)
+2024-12-26 14:09:49,466 [DEBUG] org.studyeasy.SpringRestdemo.SpringRestdemoApplication [main] Running with Spring Boot v3.0.1, Spring v6.0.3
+2024-12-26 14:09:49,467 [INFO] org.studyeasy.SpringRestdemo.SpringRestdemoApplication [main] No active profile set, falling back to 1 default profile: "default"
+2024-12-26 14:09:50,329 [INFO] org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-12-26 14:09:50,383 [INFO] org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 46 ms. Found 3 JPA repository interfaces.
+2024-12-26 14:09:50,845 [INFO] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
+2024-12-26 14:09:50,856 [INFO] org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+2024-12-26 14:09:50,856 [INFO] org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/10.1.4]
+2024-12-26 14:09:50,941 [INFO] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+2024-12-26 14:09:50,941 [INFO] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1434 ms
+2024-12-26 14:09:51,027 [INFO] com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2024-12-26 14:09:51,221 [INFO] com.zaxxer.hikari.pool.HikariPool [main] HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./db/db user=ADMIN
+2024-12-26 14:09:51,223 [INFO] com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2024-12-26 14:09:51,232 [INFO] org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration [main] H2 console available at '/db-console'. Database available at 'jdbc:h2:file:./db/db'
+2024-12-26 14:09:51,367 [INFO] org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-26 14:09:51,407 [INFO] org.hibernate.Version [main] HHH000412: Hibernate ORM core version 6.1.6.Final
+2024-12-26 14:09:51,542 [WARN] org.hibernate.orm.deprecation [main] HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2024-12-26 14:09:51,636 [INFO] SQL dialect [main] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2024-12-26 14:09:52,289 [INFO] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-12-26 14:09:52,297 [INFO] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-12-26 14:09:53,022 [WARN] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-12-26 14:09:53,691 [INFO] org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver [main] Exposing 1 endpoint(s) beneath base path '/actuator'
+2024-12-26 14:09:53,749 [INFO] org.springframework.security.web.DefaultSecurityFilterChain [main] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6dd59886, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@65a7bc80, org.springframework.security.web.context.SecurityContextHolderFilter@3f7aa4f8, org.springframework.security.web.header.HeaderWriterFilter@28f7cca4, org.springframework.security.web.authentication.logout.LogoutFilter@472dc215, org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter@599cf2cd, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2403c1c5, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@475fb7, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5b132063, org.springframework.security.web.session.SessionManagementFilter@51a06fd5, org.springframework.security.web.access.ExceptionTranslationFilter@6c04310f, org.springframework.security.web.access.intercept.AuthorizationFilter@22825762]
+2024-12-26 14:09:54,050 [INFO] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8080 (http) with context path ''
+2024-12-26 14:09:54,061 [INFO] org.studyeasy.SpringRestdemo.SpringRestdemoApplication [main] Started SpringRestdemoApplication in 4.937 seconds (process running for 5.327)
+2024-12-26 14:09:55,524 [INFO] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [RMI TCP Connection(2)-127.0.0.1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-26 14:09:55,525 [INFO] org.springframework.web.servlet.DispatcherServlet [RMI TCP Connection(2)-127.0.0.1] Initializing Servlet 'dispatcherServlet'
+2024-12-26 14:09:55,527 [INFO] org.springframework.web.servlet.DispatcherServlet [RMI TCP Connection(2)-127.0.0.1] Completed initialization in 2 ms
+2024-12-26 14:10:26,948 [INFO] org.springdoc.api.AbstractOpenApiResource [http-nio-8080-exec-1] Init duration for springdoc-openapi is: 338 ms
