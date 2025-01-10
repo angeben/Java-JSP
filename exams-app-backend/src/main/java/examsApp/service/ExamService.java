@@ -28,7 +28,7 @@ public class ExamService {
         return examRepository.findById(id);
     }
 
-    public void deleteAlbum(Exam exam){
+    public void deleteExam(Exam exam){
         examRepository.delete(exam);
     }
 }
