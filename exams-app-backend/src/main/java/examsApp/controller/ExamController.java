@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import examsApp.model.Account;
 import examsApp.model.Exam;
-import examsApp.payload.exam.ExamDTO;
-import examsApp.payload.exam.ExamViewDTO;
+import examsApp.payload.exam.ExamPayload;
+import examsApp.payload.exam.ExamViewPayload;
 import examsApp.service.AccountService;
 import examsApp.service.ExamService;
 import examsApp.util.constants.ExamError;
@@ -54,7 +54,7 @@ public class ExamController {
     @ApiResponse(responseCode = "404", description = "Not found")
     @Operation(summary = "Create an Exam")
     @SecurityRequirement(name = "angeben-exams-app")
-    public ResponseEntity<ExamViewDTO> addExam(@Valid @RequestBody ExamDTO examDTO, Authentication auth) {
+    public ResponseEntity<ExamViewPayload> addExam(@Valid @RequestBody ExamPayload examDTO, Authentication auth) {
         try {
             Exam exam = new Exam();
             exam.setName(examDTO.getName());
@@ -64,7 +64,7 @@ public class ExamController {
             Account user = opAccount.get();
             exam.setAccount(user);
             exam = examService.save(exam);
-            ExamViewDTO examViewDTO = new ExamViewDTO(exam.getId(), exam.getName(), exam.getDescription());
+            ExamViewPayload examViewDTO = new ExamViewPayload(exam.getId(), exam.getName(), exam.getDescription(), null);
             return ResponseEntity.ok(examViewDTO);
 
         } catch (Exception e) {
@@ -79,15 +79,15 @@ public class ExamController {
     @ApiResponse(responseCode = "404", description = "Not found")
     @Operation(summary = "Get exams information")
     @SecurityRequirement(name = "angeben-exams-app")
-    public List<ExamViewDTO> get_Exams(Authentication auth){
+    public List<ExamViewPayload> get_Exams(Authentication auth){
         // Get logged in user
         String username = auth.getName();
         Optional<Account> opUser = accountService.findByEmail(username);
         Account user = opUser.get();
         // Get exams
-        List<ExamViewDTO> exams = new ArrayList<>();
+        List<ExamViewPayload> exams = new ArrayList<>();
         for(Exam exam: examService.findByAccount_id(user.getId()))
-            exams.add(new ExamViewDTO(exam.getId(), exam.getName(), exam.getDescription()));
+            exams.add(new ExamViewPayload(exam.getId(), exam.getName(), exam.getDescription(), null));
         
         return exams;
     }
@@ -98,7 +98,7 @@ public class ExamController {
     @ApiResponse(responseCode = "404", description = "Not found")
     @Operation(summary = "Get exam information by id")
     @SecurityRequirement(name = "angeben-exams-app")
-    public ResponseEntity<ExamViewDTO> exam_by_id(@PathVariable long exam_id, Authentication auth){
+    public ResponseEntity<ExamViewPayload> exam_by_id(@PathVariable long exam_id, Authentication auth){
         // Get logged in user
         String username = auth.getName();
         Optional<Account> opUser = accountService.findByEmail(username);
@@ -115,7 +115,7 @@ public class ExamController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
 
         // Create DTO
-        ExamViewDTO examViewDTO = new ExamViewDTO(exam.getId(), exam.getName(), exam.getDescription());
+        ExamViewPayload examViewDTO = new ExamViewPayload(exam.getId(), exam.getName(), exam.getDescription(), null);
         return ResponseEntity.ok(examViewDTO);
     }
 
@@ -125,7 +125,7 @@ public class ExamController {
     @ApiResponse(responseCode = "404", description = "Not found")
     @Operation(summary = "Update exam information by id")
     @SecurityRequirement(name = "angeben-exams-app")
-    public ResponseEntity<ExamViewDTO> update_Exam(@Valid @RequestBody ExamDTO examDTO, @PathVariable long exam_id, Authentication auth){
+    public ResponseEntity<ExamViewPayload> update_Exam(@Valid @RequestBody ExamPayload examDTO, @PathVariable long exam_id, Authentication auth){
         // Get logged in user
         String username = auth.getName();
         Optional<Account> opUser = accountService.findByEmail(username);
@@ -146,7 +146,7 @@ public class ExamController {
         exam.setDescription(examDTO.getDescription());
         exam = examService.save(exam);
         // Create DTO
-        ExamViewDTO examViewDTO = new ExamViewDTO(exam.getId(), exam.getName(), exam.getDescription());
+        ExamViewPayload examViewDTO = new ExamViewPayload(exam.getId(), exam.getName(), exam.getDescription(),null);
         return ResponseEntity.ok(examViewDTO);
     }
 
