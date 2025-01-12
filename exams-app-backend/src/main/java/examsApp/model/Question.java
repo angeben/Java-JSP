@@ -32,7 +32,7 @@ public class Question {
 
     private String answer_c;
 
-    private int right_answer;
+    private String right_answer;
 
     @ManyToOne()
     @JoinColumn(name="exam_id", referencedColumnName = "id", nullable = false)

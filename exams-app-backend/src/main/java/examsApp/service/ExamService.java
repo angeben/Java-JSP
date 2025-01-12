@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import examsApp.model.Exam;
 import examsApp.repository.ExamRepository;
 
-
 @Service
 public class ExamService {
 

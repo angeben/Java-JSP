@@ -34,6 +34,6 @@ public class QuestionPayload {
 
     @NotBlank
     @Schema(description = "Indicator of which is the right answer", example = "B", requiredMode = RequiredMode.REQUIRED)
-    private int right_answer;
+    private String right_answer;
 
 }

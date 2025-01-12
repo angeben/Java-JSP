@@ -19,10 +19,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import examsApp.model.Account;
 import examsApp.model.Exam;
+import examsApp.model.Question;
 import examsApp.payload.exam.ExamPayload;
 import examsApp.payload.exam.ExamViewPayload;
+import examsApp.payload.exam.QuestionPayload;
 import examsApp.service.AccountService;
 import examsApp.service.ExamService;
+import examsApp.service.QuestionService;
 import examsApp.util.constants.ExamError;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -45,6 +48,9 @@ public class ExamController {
 
     @Autowired
     private ExamService examService;
+
+    @Autowired
+    private QuestionService questionService;
 
     @CrossOrigin
     @PostMapping(value = "/exams/add", consumes = "application/json", produces = "application/json")
@@ -86,8 +92,10 @@ public class ExamController {
         Account user = opUser.get();
         // Get exams
         List<ExamViewPayload> exams = new ArrayList<>();
-        for(Exam exam: examService.findByAccount_id(user.getId()))
-            exams.add(new ExamViewPayload(exam.getId(), exam.getName(), exam.getDescription(), null));
+        for(Exam exam: examService.findByAccount_id(user.getId())){
+            List<Question> exam_questions = questionService.findByExamId(exam.getId());
+            exams.add(new ExamViewPayload(exam.getId(), exam.getName(), exam.getDescription(), exam_questions));
+        }
         
         return exams;
     }
@@ -115,7 +123,8 @@ public class ExamController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
 
         // Create DTO
-        ExamViewPayload examViewDTO = new ExamViewPayload(exam.getId(), exam.getName(), exam.getDescription(), null);
+        List<Question> exam_questions = questionService.findByExamId(exam.getId());
+        ExamViewPayload examViewDTO = new ExamViewPayload(exam.getId(), exam.getName(), exam.getDescription(), exam_questions);
         return ResponseEntity.ok(examViewDTO);
     }
 
@@ -146,12 +155,14 @@ public class ExamController {
         exam.setDescription(examDTO.getDescription());
         exam = examService.save(exam);
         // Create DTO
-        ExamViewPayload examViewDTO = new ExamViewPayload(exam.getId(), exam.getName(), exam.getDescription(),null);
+        List<Question> exam_questions = questionService.findByExamId(exam.getId());
+        ExamViewPayload examViewDTO = new ExamViewPayload(exam.getId(), exam.getName(), exam.getDescription(), exam_questions);
         return ResponseEntity.ok(examViewDTO);
     }
 
     @DeleteMapping(value = "/exams/{exam_id}/delete")
     @ApiResponse(responseCode = "200", description = "OK")
+    @ApiResponse(responseCode = "202", description = "Accepted")
     @ApiResponse(responseCode = "400", description = "Bad Request")
     @ApiResponse(responseCode = "404", description = "Not found")
     @Operation(summary = "Delete exam by id")
@@ -175,6 +186,45 @@ public class ExamController {
         // Delete exam
         examService.deleteExam(exam);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);
+    }
+
+    @CrossOrigin
+    @PostMapping(value = "/exams/{exam_id}/add-questions", consumes = "application/json", produces = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiResponse(responseCode = "200", description = "OK")
+    @ApiResponse(responseCode = "400", description = "Bad Request")
+    @ApiResponse(responseCode = "404", description = "Not found")
+    @Operation(summary = "Add questions to an exam")
+    @SecurityRequirement(name = "angeben-exams-app")
+    public ResponseEntity<ExamViewPayload> addQuestions(@Valid @RequestBody QuestionPayload questionDTO, @PathVariable long exam_id, Authentication auth) {
+        // Get user account
+        String username = auth.getName();
+        Optional<Account> opUser = accountService.findByEmail(username);
+        Account user = opUser.get();
+        // Get exam
+        Optional<Exam> opExam = examService.findById(exam_id);
+        Exam exam;
+        if(opExam.isPresent())
+            exam = opExam.get();
+        else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        // Check authority for editing exam
+        if(user.getId() != exam.getAccount().getId())
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        
+        // Save the new question
+        Question question = new Question();
+        question.setQuestion_body(questionDTO.getQuestion_body());
+        question.setAnswer_a(questionDTO.getAnswer_a());
+        question.setAnswer_b(questionDTO.getAnswer_b());
+        question.setAnswer_c(questionDTO.getAnswer_c());
+        question.setRight_answer(questionDTO.getRight_answer());
+        question.setExam(exam);
+        questionService.save(question);
+
+        // Get all questions from the exam and return payload
+        List<Question> exam_questions = questionService.findByExamId(exam_id);
+        ExamViewPayload examViewPayload = new ExamViewPayload(exam_id, exam.getName(), exam.getDescription(), exam_questions);
+        return ResponseEntity.ok(examViewPayload);
     }
 
 }
